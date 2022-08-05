@@ -20,6 +20,7 @@ function PostIndex() {
         return filter ? title.includes(filter) : true
       }),
     )
+    console.log(location.search)
   }, [searchParams])
 
   return (
