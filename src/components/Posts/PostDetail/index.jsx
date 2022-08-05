@@ -1,10 +1,12 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-import { postData } from '../../../constants/postData'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function PostDetail() {
-  const params = useParams()
-  const post = postData.find((post) => post.id === parseInt(params.postId))
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { post } = location.state ? location.state : { post: null }
+
+  if (!post) return <p>Not Found</p>
   return (
     <div>
       <p>{post.title}</p>

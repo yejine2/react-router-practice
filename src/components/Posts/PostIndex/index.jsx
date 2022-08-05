@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams, useLocation } from 'react-router-dom'
 import { postData } from '../../../constants/postData'
 
 function PostIndex() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [posts, setPosts] = useState(postData)
+  const location = useLocation()
 
   const searchInputHandler = (e) => {
     const filter = e.target.value
@@ -24,11 +25,18 @@ function PostIndex() {
   return (
     <div>
       <input onChange={searchInputHandler} />
-      {posts.map((post) => (
-        <Link to={`/posts/${post.id}`}>
-          <p>{post.title}</p>
-        </Link>
-      ))}
+      {posts.map((post) => {
+        return (
+          <p key={post.id}>
+            <Link
+              to={`/posts/${post.id}`}
+              state={{ post: posts.find((data) => data.id === post.id) }}
+            >
+              {post.title}
+            </Link>
+          </p>
+        )
+      })}
     </div>
   )
 }
